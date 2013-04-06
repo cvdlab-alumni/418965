@@ -15,10 +15,4 @@ wind23 = T([3])([2.5])(wind22)
 
 windows = STRUCT([wind1T,wind21,wind22,wind23])
 
-#prova di finestre colorate
-#VIEW(windows)
-
-#prova totale
-#build = STRUCT([pillars_total, floors, vert_partitions, windows])
-#VIEW(build)
-
+building = STRUCT([pillars,floors,vert_partitions,windows])
