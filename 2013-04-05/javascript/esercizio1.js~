@@ -48,11 +48,5 @@ var pila42 = STRUCT([T([0,2])([0.5+4.7+0.5+4.7,0.14+((2.36+0.14)*3)]),pil,T([0])
 var pillars3 = STRUCT([mini_pilastro4, mini_pilastro42, pila4 ,pila42])
 
 
-var pillars_total = STRUCT([pillars0,pillars1,pillars2,pillars3])
 
-//DRAW(pillars_total)
-
-
-
-
-
+DRAW(STRUCT([pillars0,pillars1,pillars2,pillars3]))

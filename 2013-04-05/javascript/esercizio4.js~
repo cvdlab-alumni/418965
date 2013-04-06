@@ -1,5 +1,5 @@
 
-//esercizio4
+
 
 //finestra colorata di rosso
 var wind1 = COLOR([10,0,0])(R([1,2])(PI/2)(CUBOID([10.15,1.5,0.25])))
@@ -18,7 +18,7 @@ var windows = STRUCT([wind1T,wind21,wind22,wind23])
 //DRAW(windows)
 
 //prova totale
-//var build = STRUCT([pillars_total, floors, vert_partitions, east_color])
+//var build = STRUCT([pillars, floors, vert_partitions, east_color])
 //DRAW(build)
 
 
