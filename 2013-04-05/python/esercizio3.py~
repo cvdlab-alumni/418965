@@ -86,8 +86,7 @@ east = STRUCT([e1,e2,e3,e4,e5,e6,e7])
 
 vert_partitions = STRUCT([south,north,west_traslated,east])
 #prova dell'esercizio3
-#VIEW(vert_partitions)
+#VIEW(vert_partition)
 
 #prova totale
-#build = STRUCT([pillars_total, floors, vert_partitions])
-#VIEW(build)
+build = STRUCT([pillars_total, floors, vert_partition])
