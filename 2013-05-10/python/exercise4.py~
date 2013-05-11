@@ -1,0 +1,53 @@
+#domini 
+dom1D = INTERVALS(1)(32)
+dom2D = PROD([dom1D, dom1D])
+
+#funzione generale che costruisce la curva
+def bez_curve_nomap(controlpoints):
+	return BEZIER(S1)(controlpoints)
+
+
+#generalizzazione per la creazione di superfici
+def bez_sup(curves):
+	return MAP(BEZIER(S2)(curves))(dom2D)
+
+
+posiz = T([1,2])([1.77, 4.05])
+
+manubrio = COLOR(BLACK)(posiz(TORUS([1.2,1.1])([36,36])))
+
+h = SIZE([3])(manubrio)[0]
+
+manubrio_centro = COLOR(BLACK)(posiz(CYLINDER([0.4,h/2])(42)))
+
+manubrio_oblo = posiz(DIFF([CYLINDER([0.3,h/2])(42),CYLINDER([0.25,h/2])(42)]))
+
+C1man2 = bez_curve_nomap([[0.65, 3.8,h/2], [1.70, 4.74,h/2], [2.09, 4.65,h/2], [2.89, 3.8,h/2]])
+
+C1man1 = bez_curve_nomap([[0.65, 4.06,h/2], [1.70, 4.54,h/2], [2.09, 4.45,h/2], [2.89, 4.03,h/2]])
+
+C1man11 = bez_curve_nomap([[0.65, 4.26,-h/2], [1.70, 4.74,-h/2], [2.09, 4.65,-h/2], [2.89, 4.23,-h/2]])
+
+C1man22 = bez_curve_nomap([[0.65, 4.06,-h/2], [1.70, 4.54,-h/2], [2.09, 4.45,-h/2], [2.89, 4.03,-h/2]])
+
+man_up = bez_sup([C1man1,C1man11,C1man22,C1man2,C1man1])
+
+man_sx = COLOR(BLACK)(T([1,2])([1.77+0.2,3.75])(CUBOID([-0.4,-0.85,h/2])))
+
+man_dx = COLOR(BLACK)(T([1,2])([1.77+0.2,3.75])(CUBOID([-0.4,-0.85,h/2])))
+
+man_down = COLOR(BLACK)(T([1,2])([1.77+0.2,3.75])(CUBOID([-0.4,-0.85,h/2])))
+
+volante0 = STRUCT([manubrio, manubrio_centro, manubrio_oblo,man_down])
+
+VIEW(volante0)
+
+##inserimento volonte nella vettura
+
+volante1 = R([1,3])(PI/2)(volante0) 
+
+volante2 = S([1,2,3])([0.25,0.25,0.25])(volante1)
+
+volante = T([1,3])([1,-1])(volante2)
+
+VIEW(STRUCT([scocca,ruote,volante]))
