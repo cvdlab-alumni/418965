@@ -164,17 +164,28 @@ var tea_trolley = function(colorLate){
 	s.push(gridupx)
 
 	var b1down = CUBOID([3.45,struct_depth, struct_depth/4]);
-	var b3down = T([2])([body_depth-4*struct_depth])(b1down);
-	var b2down = CUBOID([struct_depth/4, struct_depth, body_depth]);
+	var b3down = T([2])([trolley_depth+struct_depth+struct_depth/2])(b1down);
+	var b2down = CUBOID([struct_depth/4, struct_depth, trolley_depth+struct_depth+struct_depth/2]);
 	var b4down = T([0])([3.45])(b2down);
-
-	var bodydown = COLOR(colorLate)(T([0,1,2])([9.76-3.45, 3.22,-struct_depth])(STRUCT([b1down,b2down,b3down,b4down])));
+	var bbottom2 = CUBOID([3.45,0,2.15]);
+	
+	var bodydown = COLOR(colorLate)(T([0,1,2])([6.31, 3.32, struct_depth/4])(STRUCT([b1down,b2down,b3down,b4down,bbottom2])));
 	s.push(bodydown);
 
-	DRAW(STRUCT(s));
+	var platedown = COLOR([1,1,1])(T([0,1,2])([6.31,3.33,+struct_depth/4])(CUBOID([3.45, 0.015,2.15])));
+	s.push(platedown);
+	
+	var griddownz = T([0,1,2])([6.31,3.33+0.016,struct_depth/4])(grid(3.45,2.15,2,4));
+	s.push(griddownz);
+	var griddownx = T([0,1,2])([6.31,3.33+0.016,struct_depth/4])(grid(3.45,2.15,0,8));
+	s.push(griddownx)
+
+
+	return STRUCT(s);
 
 
 }
 
 colorL = [255/255,211/255,155/255];
-tea_trolley(colorL);
+var t = tea_trolley(colorL);
+DRAW(t);

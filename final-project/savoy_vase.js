@@ -1,4 +1,4 @@
-//domini 
+//domini -> con un dominio a 10 invece che a 64 partizioni molti particolari si perdono!
 var dom1D = INTERVALS(1)(50);
 var dom2D = PROD1x1([dom1D,dom1D]);
 
@@ -30,15 +30,15 @@ function genNUBS (controlPoints){
   return [curve,nubs]
 }
 
-var savoy_vase = function(colorBody, colorBords){
+var savoy_vase = function(colorVase){
 	var vase_length = 0.1;
 	var s = [];
 
 	//bourdeline's vase
 	var points1 = [[6.62, 4.11], [6.03, 5.02], [4.64, 4.07],[5.57, 3.13], 
-					[6.71, 2.54], [6.66, 1.94],[6.75, 1.3], [8.07, 1.14]];
+					[6.71, 2.54], [6.66, 1.94],[6.75, 1.3], [7.41, 1.14]];
 
-	var points2 = [[8.07,1.14],[8.45, 1.99],[8.51, 2.74], [9.22, 3.43],[9.47, 3.98],
+	var points2 = [[7.41,1.14], [7.74,1.22], [8.07,1.3], [8.45, 1.99],[8.51, 2.74], [9.22, 3.43],[9.47, 3.98],
 					  [9.24, 4.89], [8.8, 5.24],[8.54, 5.17],[8.51, 5.17]];
 
 	
@@ -50,9 +50,9 @@ var savoy_vase = function(colorBody, colorBords){
 	var vasoup3 = genNUBS(points3);
 
 	var points4 = [[6.62-vase_length, 4.11], [6.03, 5.02-vase_length], [4.64+vase_length, 4.07], [5.57+vase_length, 3.13],
-					[6.71+vase_length, 2.54], [6.66+vase_length, 1.94], [6.75, 1.3+vase_length], [8, 1.14+vase_length]]
+					[6.71+vase_length, 2.54], [6.66+vase_length, 1.94], [6.75, 1.3+vase_length], [7.37, 1.14+vase_length]]
 
-	var points5 = [[8, 1.14+vase_length],[8.45-vase_length, 1.99], [8.51-vase_length, 2.74], [9.22-vase_length, 3.43],[9.47-vase_length, 3.98],
+	var points5 = [[7.37, 1.14+vase_length], [7.74,1.22+vase_length], [8,1.3+vase_length], [8.45-vase_length, 1.99], [8.51-vase_length, 2.74], [9.22-vase_length, 3.43],[9.47-vase_length, 3.98],
 					[9.24-vase_length, 4.89], [8.8, 5.24-vase_length],[8.54, 5.17-vase_length],[8.51, 5.17-vase_length]]
 
 	var points6 = [[6.62-vase_length,4.11],[6.82, 3.89-vase_length],[7.17, 4.05-vase_length],[7.43, 4.32-vase_length],
@@ -74,20 +74,18 @@ var savoy_vase = function(colorBody, colorBords){
 	var bottom_sup1 = bez_sup([vasoup1[1],vasoup2[1]]);
 	var bottom_sup2 = bez_sup([vasoup2[1],vasoup3[1]]);
 
-	var bottom = T([2])([2.5])(COLOR(colorS)(STRUCT([bottom_sup1,bottom_sup2])));
+	var bottom = T([2])([2.5])(COLOR([1,0,0])(STRUCT([bottom_sup1,bottom_sup2])));
 	s.push(bottom);
 	
 	//body's vase
-	var body = COLOR(colorT)(EXTRUDE([2.5])(border));
+	var body = COLOR([1,0,0,0.5])(EXTRUDE([2.5])(border));
 	s.push(body)
 	
 	//posizionamento
 	var vase = R([1,2])([PI])(STRUCT(s));
-	return T([0,1,2])([-2,5,2.5])(vase);
+	 return T([0,1,2])([-2,5,2.5])(vase);
 
 };
 
-colorTras = [1,0,0,0.5];
-colorSim = [1,0,0];
-var s = savoy_vase(colorTras, colorSim);
-DRAW(s);
+var v = savoy_vase();
+DRAW(v);
