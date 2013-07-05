@@ -1,5 +1,5 @@
-//domini -> con un dominio a 10 invece che a 64 partizioni molti particolari si perdono!
-var dom1D = INTERVALS(1)(50);
+//domini 
+var dom1D = INTERVALS(1)(10);
 var dom2D = PROD1x1([dom1D,dom1D]);
 
 //generalizzazione per la creazione di superfici
@@ -23,7 +23,7 @@ function generateKnot(controlPoints){
 }
 
 function genNUBS (controlPoints){
-  var domain = INTERVALS(1)(50)
+  var domain = INTERVALS(1)(10)
   var knots = generateKnot(controlPoints)
   var nubs = NUBS(S0)(2)(knots)(controlPoints)
   var curve = MAP(nubs)(domain)

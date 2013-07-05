@@ -2,7 +2,7 @@
 var bez_curve = function(controlpoints){
 	return BEZIER(S0)(controlpoints);}
 
-//domini -> con un dominio a 10 invece che a 64 partizioni molti particolari si perdono!
+//domini 
 var dom1D = INTERVALS(1)(10);
 var dom2D = PROD1x1([dom1D,dom1D]);
 
