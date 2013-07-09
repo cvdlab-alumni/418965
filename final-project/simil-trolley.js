@@ -3,7 +3,7 @@ var bez_curve = function(controlpoints){
 	return BEZIER(S0)(controlpoints);}
 
 //domini 
-var dom1D = INTERVALS(1)(10);
+var dom1D = INTERVALS(1)(20);
 var dom2D = PROD1x1([dom1D,dom1D]);
 
 //generalizzazione per la creazione di superfici
@@ -16,10 +16,10 @@ var herm_sup = function(curves){
 	return MAP(CUBIC_HERMITE(S1)(curves))(dom2D);
 }
 
-var wheel = function(r,h,d){
+var wheel = function(r,h,d,color){
 
-	var d1 = COLOR([255/255,1/255,1/255])(DISK([r])([36,1]));
-	var c1 = COLOR([255/255,1/255,1/255])(CYL_SURFACE([r,d])([36,1]));
+	var d1 = COLOR(color)(DISK([r])([36,1]));
+	var c1 = COLOR(color)(CYL_SURFACE([r,d])([36,1]));
 	var c2 = COLOR([0,0,0])(T([2])([d])(CYL_SURFACE([r,h])([36,1])));
 	var c3 = T([2])([h+d])(c1);
 	var d2 = T([2])([h+2*d])(d1);
@@ -54,14 +54,14 @@ var simil_trolley = function(color){
 	s.push(COLOR(color)(c32));
 
 	var c4up = bez_curve([[4.54, 2.86,0], [4.51, 2.61,0], [4.38, 2.51,0], [4.16, 2.71,0]]);
-	var c4down = bez_curve([[4.54-struct_depth, 2.86,0], [4.51-struct_depth, 2.65,0], [4.34, 2.55+struct_depth,0], [4.16, 2.71+struct_depth,0]]);
+	var c4down = bez_curve([[4.54-struct_depth, 2.86,0], [4.51-struct_depth, 2.65,0], [4.38, 2.55+struct_depth,0], [4.16, 2.73+struct_depth,0]]);
 	var c41 = herm_sup([c4up,c4down,[0,0,-tube_depth],[0,0,tube_depth]]); 
 	s.push(COLOR(color)(c41));
 	var c42 = herm_sup([c4up,c4down,[0,0,tube_depth],[0,0,-tube_depth]]); 
 	s.push(COLOR(color)(c42));
 
 	var c5up = bez_curve([[4.16, 2.71,0], [3.18, 3.5,0], [2.73, 3.8,0], [3.22, 3.78,0]]);
-	var c5down = bez_curve([[4.16, 2.71+struct_depth,0], [3.18, 3.5+struct_depth,0], [2.73+struct_depth, 3.8-struct_depth,0], [3.22+struct_depth, 3.78-struct_depth,0]]);
+	var c5down = bez_curve([[4.16, 2.73+struct_depth,0], [3.22, 3.5+struct_depth,0], [2.8+struct_depth, 3.8-struct_depth,0], [3.22+struct_depth, 3.78-struct_depth,0]]);
 	var c51 = herm_sup([c5up,c5down,[0,0,-tube_depth],[0,0,tube_depth]]); 
 	s.push(COLOR(color)(c51));
 	var c52 = herm_sup([c5up,c5down,[0,0,tube_depth],[0,0,-tube_depth]]); 
@@ -105,7 +105,7 @@ var simil_trolley = function(color){
 	s.push(T([0,2])([3.1,2.7])(R([0,2])([PI/2])(COLOR(color)(d12))));
 
 	//wheels 
-	var w1 = T([0,1,2])([3.05, 3.7,-0.75])(wheel(1.09,0.05,0.01));
+	var w1 = T([0,1,2])([3.05, 3.7,-0.75])(wheel(1.3,0.05,0.01,color));
 	var w = STRUCT([w1, T([2])([1.35]), w1]);
 	s.push(w);
 
@@ -113,21 +113,21 @@ var simil_trolley = function(color){
 	s.push(COLOR(color)(asse));
 
 	//piatti 
-	var body_depth = 1.21+2*struct_depth
+	var body_depth = 1.11+2*struct_depth
 	var b1up = CUBOID([1.94+0.5,2*struct_depth, struct_depth]);
 	var b3up = T([2])([body_depth])(b1up);
 	var b2up = CUBOID([struct_depth, 2*struct_depth, body_depth+struct_depth]);
 	var b4up = T([0])([1.94+0.5])(b2up);
-	var bbottom = CUBOID([1.94+0.5,0,1.31]);
-	var bodyup = T([0,1,2])([2, 4.84,-0.7])(STRUCT([b1up,b2up,b3up,b4up,bbottom]));
+	var bbottom = CUBOID([1.94+0.5,0,1.21]);
+	var bodyup = T([0,1,2])([2, 4.84,-0.68])(STRUCT([b1up,b2up,b3up,b4up,bbottom]));
 	s.push(COLOR(color)(bodyup));
 
-	var b1down = CUBOID([1.35,struct_depth, struct_depth/2]);
-	var b3down = T([2])([body_depth-0.15])(b1down);
-	var b2down = CUBOID([struct_depth/2, struct_depth, body_depth-0.125]);
+	var b1down = CUBOID([1.375,struct_depth, struct_depth/2]);
+	var b3down = T([2])([body_depth+struct_depth/2])(b1down);
+	var b2down = CUBOID([struct_depth/2, struct_depth, body_depth+struct_depth/2]);
 	var b4down = T([0])([1.35])(b2down);
-	var bbottom2 = CUBOID([1.35,0,body_depth-0.15]);
-	var bodydown = T([0,1,2])([3.12, 3.8,-0.63])(STRUCT([b1down,b3down,b2down,b4down,bbottom2]));
+	var bbottom2 = CUBOID([1.35,0,body_depth+struct_depth/2]);
+	var bodydown = T([0,1,2])([3.12, 3.78,-0.68])(STRUCT([b1down,b3down,b2down,b4down,bbottom2]));
 	s.push(COLOR(color)(bodydown));
 
 	return STRUCT(s);

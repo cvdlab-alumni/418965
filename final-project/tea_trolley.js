@@ -3,7 +3,7 @@ var bez_curve = function(controlpoints){
 	return BEZIER(S0)(controlpoints);}
 
 //domini 
-var dom1D = INTERVALS(1)(10);
+var dom1D = INTERVALS(1)(20);
 var dom2D = PROD1x1([dom1D,dom1D]);
 var domain = DOMAIN([[0,2*PI],[0,1]])([50,50]);
 
@@ -29,10 +29,10 @@ var movesPoints = function(pointList, axis, qty) {
 };
 
 //funzione cilindro per la ruota
-var wheel = function(r,h,d){
+var wheel = function(r,h,d,color){
 
-	var d1 = COLOR([224/255,238/255,238/255])(DISK([r])([36,1]));
-	var c1 = COLOR([224/255,238/255,238/255])(CYL_SURFACE([r,d])([36,1]));
+	var d1 = COLOR(color)(DISK([r])([36,1]));
+	var c1 = COLOR(color)(CYL_SURFACE([r,d])([36,1]));
 	var c2 = COLOR([0,0,0])(T([2])([d])(CYL_SURFACE([r,h])([36,1])));
 	var c3 = T([2])([h+d])(c1);
 	var d2 = T([2])([h+2*d])(d1);
@@ -70,7 +70,7 @@ var grid = function(maxx,maxz,axis,n){
 };
 
 
-var tea_trolley = function(colorLate){
+var tea_trolley = function(colorLate,colorWheel){
 
 	var struct_depth = 0.1;
 	var trolley_depth = 2;
@@ -137,7 +137,7 @@ var tea_trolley = function(colorLate){
 	s.push(struct);
 
 	//wheels
-	var w = T([2])([-struct_depth])(wheel(1,0.1,0.01));
+	var w = T([2])([-struct_depth])(wheel(1,0.1,0.01,colorWheel));
 	var wheels = STRUCT([T([0,1])([6.33, 3.28]), w, T([2])([trolley_depth+3*struct_depth]), w]);
 	s.push(wheels)
 
@@ -155,7 +155,7 @@ var tea_trolley = function(colorLate){
 	var bodyup = COLOR(colorLate)(T([0,1,2])([5.12, 5.27,-struct_depth])(STRUCT([b1up,b2up,b3up,b4up,bbottom])));
 	s.push(bodyup);
 
-	var plateup = COLOR([1,1,1])(T([0,1,2])([5.12,5.28,-struct_depth])(CUBOID([4.5, 0.015,2.375])));
+	var plateup = COLOR(colorWheel)(T([0,1,2])([5.12,5.28,-struct_depth])(CUBOID([4.5, 0.015,2.375])));
 	s.push(plateup);
 	
 	var gridupz = T([0,1,2])([5.12,5.28+0.016,-struct_depth])(grid(4.5,2.375,2,5));
@@ -172,7 +172,7 @@ var tea_trolley = function(colorLate){
 	var bodydown = COLOR(colorLate)(T([0,1,2])([6.31, 3.32, struct_depth/4])(STRUCT([b1down,b2down,b3down,b4down,bbottom2])));
 	s.push(bodydown);
 
-	var platedown = COLOR([1,1,1])(T([0,1,2])([6.31,3.33,+struct_depth/4])(CUBOID([3.45, 0.015,2.15])));
+	var platedown = COLOR(colorWheel)(T([0,1,2])([6.31,3.33,+struct_depth/4])(CUBOID([3.45, 0.015,2.15])));
 	s.push(platedown);
 	
 	var griddownz = T([0,1,2])([6.31,3.33+0.016,struct_depth/4])(grid(3.45,2.15,2,4));
@@ -187,5 +187,6 @@ var tea_trolley = function(colorLate){
 }
 
 colorL = [255/255,211/255,155/255];
-var t = tea_trolley(colorL);
+colorW = [224/255,238/255,238/255];
+var t = tea_trolley(colorL,colorW);
 DRAW(t);
