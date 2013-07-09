@@ -2,7 +2,7 @@
 var bez_curve = function(controlpoints){
 	return BEZIER(S0)(controlpoints);}
 
-//domini 
+//domini -
 var dom1D = INTERVALS(1)(10);
 var dom2D = PROD1x1([dom1D,dom1D]);
 
@@ -18,23 +18,23 @@ var paimio_chair = function (colorInt, ColorLateral){
 	var lateral_depth = 0.15;
 
 	//body' chair
-	var c11up = bez_curve([[4.89, 4.285-body_thick], [3.99, 4.12], [4.08, 5.02], [4.64, 5.01]]);
-	var c11down = bez_curve([[4.89, 4.26+body_thick-lateral_thick], [3.99+body_thick, 4.14], [4.07+body_thick, 5.02], [4.64, 5.01-body_thick]]);
+	var c11up = bez_curve([[4.89, 4.235], [3.99, 4.12], [4.08, 5.02], [4.64, 5.01]]);
+	var c11down = bez_curve([[4.89, 4.235+body_thick], [4+body_thick, 4.14], [4.1+body_thick, 5.02], [4.64, 5.01-body_thick]]);
 	var c11sup = bez_sup([c11down, c11up]);
 	var c11 = EXTRUDE([body_depth])(c11sup);
 		
-	var c12up = bez_curve([[4.64, 5.01], [5.21, 4.68], [5.2, 3.98], [5.52, 3.64]])
-	var c12down = bez_curve([[4.64, 5.01-body_thick], [5.21-body_thick, 4.68], [5.21-body_thick, 3.98], [5.52, 3.64-body_thick]])
+	var c12up = bez_curve([[4.64, 5.01], [5.09, 4.99], [5.2, 3.98], [5.4, 3.73]])
+	var c12down = bez_curve([[4.64, 5.01-body_thick], [5.09-body_thick, 4.99], [5.2-body_thick, 3.98], [5.4-body_thick, 3.73]])
 	var c12sup = bez_sup([c12up, c12down]);
 	var c12 = EXTRUDE([body_depth])(c12sup);
 
-	var c13up = bez_curve([[5.52, 3.64], [5.57, 3.5], [6.36, 3.8], [7.18, 3.84]])
-	var c13down = bez_curve([[5.52, 3.64-body_thick], [5.57, 3.5-body_thick], [6.36, 3.8-body_thick], [7.18, 3.84-body_thick]])
+	var c13up = bez_curve([[5.4, 3.73], [5.6, 3.43], [5.63, 3.61], [7.18, 3.84]])
+	var c13down = bez_curve([[5.4-body_thick, 3.73], [5.6, 3.43-body_thick], [5.63, 3.61-body_thick], [7.18, 3.84-body_thick]])
 	var c13sup = bez_sup([c13up, c13down]);
 	var c13 = EXTRUDE([body_depth])(c13sup);
 	
-	var c14up = bez_curve([[7.18, 3.84], [7.78, 3.82], [7.25, 2.76], [6.82-lateral_thick, 3.58]])
-	var c14down = bez_curve([[7.18, 3.84-body_thick], [7.78-body_thick, 3.82], [7.25-body_thick, 2.76], [6.82-lateral_thick, 3.58+body_thick]]);
+	var c14up = bez_curve([[7.18, 3.84], [7.78, 3.82], [7.25, 2.76], [6.745, 3.58]])
+	var c14down = bez_curve([[7.18, 3.84-body_thick], [7.75-body_thick, 3.79], [7.25, 2.8+body_thick], [6.745+body_thick, 3.58]]);
 	var c14sup = bez_sup([c14up, c14down]);
 	var c14 = EXTRUDE([body_depth])(c14sup);
 	
